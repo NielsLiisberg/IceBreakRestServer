@@ -92,7 +92,7 @@ public class IceBreakRestServer {
   private int Queue ;
   private InputStream in;
 
-  /** This is the complete querysting including the resource. Just as you write it in your browser - you have to URL decode it or rather use getQuery to get paramter */
+  /** This is the complete query string including the resource. Just as you write it in your browser - you have to URL decode it or rather use getQuery to get paramter */
   public  String request;
   /** This is the contents sent by a POST  */
   public  String payload;
