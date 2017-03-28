@@ -30,7 +30,7 @@ import java.net.URL.*;
 import java.net.URLDecoder;
 
 /**
- * Super tiny HTTP serverside protocol for monolitic RESTservice applications
+ * Super tiny HTTP serverside protocol for monolithic RESTservice applications
  * Simply drop the IceBreakRestServer jar file in your project ( classpath) and you are golden.
  *
  * A simple server looks like this:
@@ -92,13 +92,13 @@ public class IceBreakRestServer {
   private int Queue ;
   private InputStream in;
 
-  /** This is the complete query string including the resource. Just as you write it in your browser - you have to URL decode it or rather use getQuery to get paramter */
+  /** This is the complete query string including the resource. Just as you write it in your browser - you have to URL decode it or rather use getQuery to get parameter */
   public  String request;
   /** This is the contents sent by a POST  */
   public  String payload;
-  /** This is the request type GET, POST, HEAD - your application have to responde coretly to this ( ore simply ignore it */
+  /** This is the request type GET, POST, HEAD - your application have to respond correctly to this ( ore simply ignore it */
   public  String method ;
-  /** This is the complete querysting after the resource as you write it in your browser - you have to URL decode it or rather use getQuery to get paramter */
+  /** This is the complete query sting after the resource as you write it in your browser - you have to URL decode it or rather use getQuery to get parameter */
   public  String queryStr;
   /** This is the name of the resource to run or get i.e. http://x/myApp.aspx/p1=abc it will return /myApp.aspx  */
   public  String resource;
@@ -109,7 +109,7 @@ public class IceBreakRestServer {
 
   /** This is the HTTP headers in the request. Use normal "Map" methods  */
   public  Map<String, String> header = new HashMap<String, String>();
-  /** This is the HTTP quesystring parameters as map. Use normal "Map" methods or getQuery() method  */
+  /** This is the HTTP query string parameters as map. Use normal "Map" methods or getQuery() method  */
   public  Map<String, String> parms  = new HashMap<String, String>();
 
   private void loadProps ( ) {
@@ -125,57 +125,58 @@ public class IceBreakRestServer {
     }
   }
   /**
-	 * Contructor, returns an instance of the rest server
-	 */
+   * Constructor, returns an instance of the rest server
+   */
   public IceBreakRestServer() {
     loadProps ();
   }
 
-  /**
-	 * Set the contents type of the HTTP contens. It has to conform
-   * the mime type. By default it has the value of "text/plain; charset=utf-8"
-	 * @param contents type string to set
-	 */
+ /**
+  * Set the contents type of the HTTP contents. It has to conform
+  * the mime type. By default it has the value of "text/plain; charset=utf-8"
+  * @param contents type string to set
+  */
   public void setContentType(String s) {
     ContentType = s;
   }
-  /**
-	 * Set the status of HTTP contens.
-   * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP status codes</a>
-	 * @param status string . by default the is "200 OK"
-	 */
+  
+ /**
+  * Set the status of HTTP contents.
+  * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP status codes</a>
+  * @param status string . by default the is "200 OK"
+  */
   public void setStatus(String s) {
     Status = s;
   }
 
-  /**
-	 * Set the TCP/IP port that you server is listening on. This is by default port 65000 and you can
-   * set this value in the config.prperties file. Or you can set it programatically here but before issuing
-   * a "getRequest()".
-   * @param port TCP/IP port to listen on
-	 */
+ /**
+  * Set the TCP/IP port that you server is listening on. This is by default port 65000 and you can
+  * set this value in the config.prperties file. Or you can set it programatically here but before issuing
+  * a "getRequest()".
+  * @param port TCP/IP port to listen on
+  */
   public void setPort(int port) {
     Port = port;
   }
 
-  /**
-	 * Set the TCP/IP queue depth for your HTTP server . This is by default port 10 and you can
-   * set this value in the config.prperties file. Or you can set it programatically here but before issuing
-   * a "getRequest()".
-   * @param port TCP/IP port to listen on
-	 */
+/**
+ * Set the TCP/IP queue depth for your HTTP server . This is by default port 10 and you can
+ * set this value in the config.prperties file. Or you can set it programatically here but before issuing
+ * a "getRequest()".
+ * @param port TCP/IP port to listen on
+ */
   public  void setQueue(int queue) {
      Queue = queue;
   }
 
-  /**
-	 * Returns the parameter from the querystring with the name of "key". if the querystring
-   * parameter was not fount it will return the default paramter
-   * Note: key is case sensitive!!
-   * @param Key - to return value for in the querystring
-   * @param Default - when key is not found this wil be the default value
-   * @return value of the querystring parameter
-	 */
+/** 
+ * Returns the parameter from the querystring with the name of "key". if the querystring
+ * parameter was not fount it will return the default paramter
+ * Note: key is case sensitive!!
+ * @param Key - to return value for in the querystring
+ * @param Default - when key is not found this wil be the default value
+ * @return value of the querystring parameter
+ */
   public  String getQuery(String Key , String Default) {
      String temp = parms.get(Key);
      if (temp == null) return Default;
@@ -183,20 +184,20 @@ public class IceBreakRestServer {
   }
 
   /**
-	 * Returns the parameter from the querystring with the name of "key". if the querystring
+   * Returns the parameter from the query string with the name of "key". if the query string
    * parameter was not fount it will <code>null</code>
    * Note: key is case sensitive!!
-   * @param Key - to return value for in the querystring
-   * @return value of the querystring parameter
-	 */
+   * @param Key - to return value for in the query string
+   * @return value of the query string parameter
+   */
   public  String getQuery(String Key) {
      return parms.get(Key);
   }
 
   /**
-	 * Just return a simple string with current timestamp in hh:mm:ss format
+   * Just return a simple string with current timestamp in hh:mm:ss format
    * @return current time in hh:mm:ss format
-	 */
+   */
   public String now () {
     String s;
     Format formatter;
