@@ -26,11 +26,9 @@ import java.text.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-import java.net.URL.*;
-import java.net.URLDecoder;
 
 /**
- * Super tiny HTTP serverside protocol for monolithic RESTservice applications
+ * Super tiny HTTP server side protocol for monolithic RESTservice applications
  * Simply drop the IceBreakRestServer jar file in your project ( classpath) and you are golden.
  *
  * A simple server looks like this:
@@ -53,7 +51,7 @@ import java.net.URLDecoder;
  *
  *       // Instantiate it once
  *       rest  = new IceBreakRestServer();
- *
+ *       
  *       while (true) {
  *
  *         // Now wait for any HTTP request
@@ -88,8 +86,8 @@ public class IceBreakRestServer {
   private String Status;
   private StringBuilder resp  = new StringBuilder(1024);
   private Boolean doFlush = false;
-  private int Port ;
-  private int Queue ;
+  private int Port = 65000;
+  private int Queue = 10;
   private InputStream in;
 
   /** This is the complete query string including the resource. Just as you write it in your browser - you have to URL decode it or rather use getQuery to get parameter */
@@ -136,8 +134,8 @@ public class IceBreakRestServer {
   * the mime type. By default it has the value of "text/plain; charset=utf-8"
   * @param contents type string to set
   */
-  public void setContentType(String s) {
-    ContentType = s;
+  public void setContentType(String contents) {
+    ContentType = contents;
   }
   
  /**
@@ -145,13 +143,13 @@ public class IceBreakRestServer {
   * @see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP status codes</a>
   * @param status string . by default the is "200 OK"
   */
-  public void setStatus(String s) {
-    Status = s;
+  public void setStatus(String status) {
+    Status = status;
   }
 
  /**
   * Set the TCP/IP port that you server is listening on. This is by default port 65000 and you can
-  * set this value in the config.prperties file. Or you can set it programatically here but before issuing
+  * set this value in the config.prperties file. Or you can set it programmatically here but before issuing
   * a "getRequest()".
   * @param port TCP/IP port to listen on
   */
@@ -161,9 +159,9 @@ public class IceBreakRestServer {
 
 /**
  * Set the TCP/IP queue depth for your HTTP server . This is by default port 10 and you can
- * set this value in the config.prperties file. Or you can set it programatically here but before issuing
+ * set this value in the config.prperties file. Or you can set it programmatically here but before issuing
  * a "getRequest()".
- * @param port TCP/IP port to listen on
+ * @param queue size
  */
   public  void setQueue(int queue) {
      Queue = queue;
@@ -171,10 +169,10 @@ public class IceBreakRestServer {
 
 /** 
  * Returns the parameter from the querystring with the name of "key". if the querystring
- * parameter was not fount it will return the default paramter
+ * parameter was not fount it will return the default parameter
  * Note: key is case sensitive!!
  * @param Key - to return value for in the querystring
- * @param Default - when key is not found this wil be the default value
+ * @param Default - when key is not found this will be the default value
  * @return value of the querystring parameter
  */
   public  String getQuery(String Key , String Default) {
@@ -195,7 +193,7 @@ public class IceBreakRestServer {
   }
 
   /**
-   * Just return a simple string with current timestamp in hh:mm:ss format
+   * Just return a simple string with current time stamp in hh:mm:ss format
    * @return current time in hh:mm:ss format
    */
   public String now () {
@@ -215,8 +213,10 @@ public class IceBreakRestServer {
        if (p >= 0) {
          String name = param.substring( 0, p);
          String value = param.substring( p+1);
-         String s = URLDecoder.decode(value);
-         map.put(name, s);
+         map.put(name, value);
+         //@SuppressWarnings("deprecation")
+		 //String s = URLDecoder.decode(value);
+         // map.put(name, s);
        }
      }  
      return map;  
@@ -341,10 +341,10 @@ public class IceBreakRestServer {
   /**
 	 * write a string back a tring to the client. The complete result will be
    * send back to the client when you issue a "flush" or do the next "getHttpRequest()"
-   * @param String - to send back to the client
+   * @param text  - to send back to the client
 	 */
-  public void write(String s) {
-    resp.append(s);
+  public void write(String text) {
+    resp.append(text);
   }
 
   /**
