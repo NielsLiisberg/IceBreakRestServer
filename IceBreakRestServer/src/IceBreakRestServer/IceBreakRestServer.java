@@ -86,7 +86,7 @@ public class IceBreakRestServer {
   private String Status;
   private StringBuilder resp  = new StringBuilder(1024);
   private Boolean doFlush = false;
-  private int Port = 65000;
+  private int Port = 8080;
   private int Queue = 10;
   private InputStream in;
 
@@ -116,7 +116,7 @@ public class IceBreakRestServer {
     try {
       //load a properties file
       prop.load(new FileInputStream("config.properties"));
-      Port  = Integer.parseInt(prop.getProperty("restserver.port","65000"));
+      Port  = Integer.parseInt(prop.getProperty("restserver.port","8080"));
       Queue = Integer.parseInt(prop.getProperty("restserver.queuesize", "10"));
     } catch (IOException ex) {
       // ex.printStackTrace();
